@@ -16,4 +16,23 @@ describe('Work with alerts', () => {
             expect(stub.getCall(0)).to.be.calledWith('Alert Simples')
         })
     })
+
+    it.only('Confirm', () => {
+        cy.get('#confirm').click()
+        cy.on('window:confirm', msg => {
+            expect(msg).to.be.equal('Confirmado')
+        })
+        cy.get('#confirm').click()
+    })
+
+    it.only('Deny', () => {
+        cy.on('window:confirm', msg => {
+            expect(msg).to.be.equal('Confirm Simples')
+            return false
+        })
+        cy.on('window:confirm', msg => {
+            expect(msg).to.be.equal('Negado')
+        })
+        cy.get('#confirm').click()
+    })
 })
